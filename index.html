@@ -170,5 +170,83 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const firstName = document.getElementById("first-name");
+        const lastName = document.getElementById("last-name");
+        const message = document.getElementById("message");
+        const myRegex = /^[a-zA-Z-\s]+$/;
+        const errorMessage = document.getElementById("error-message").innerText;
+        const messageMax = document.getElementById("message-max").innerText;
+
+        if (
+          firstName.value.trim() === "" ||
+          lastName.value.trim() === "" ||
+          message.value.trim() === ""
+        ) {
+          alert(errorMessage.trim());
+          event.preventDefault();
+        } else if (myRegex.test(firstName.value) == false) {
+          alert(
+            "Des caractères non autorisés sont présents !\nVeuillez revoir votre prénom."
+          );
+          firstName.value = "";
+          event.preventDefault();
+        } else if (myRegex.test(lastName.value) == false) {
+          alert(
+            "Des caractères non autorisés sont présents !\nVeuillez revoir votre nom."
+          );
+          lastName.value = "";
+          event.preventDefault();
+        } else if (message.value.length > 500) {
+          alert(messageMax);
+          event.preventDefault();
+        }
+
+        let commentaire = document.getElementById("comment-list");
+        let newDiv = document.createElement("div");
+        newDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
+        let newDiv1 = document.createElement("div");
+        newDiv1.classList.add("flex-1", "py-10", "border-t", "border-gray-200");
+        let newH3 = document.createElement("h3");
+        newH3.classList.add("font-medium", "text-gray-900");
+        let newDiv2 = document.createElement("div");
+        newDiv2.classList.add(
+          "prose",
+          "prose-sm",
+          "mt-4",
+          "max-w-none",
+          "text-gray-500"
+        );
+        let newP = document.createElement("p");
+
+        let newTexte = document.createTextNode(
+          firstName.value[0].toUpperCase() +
+            firstName.value.slice(1) +
+            " " +
+            lastName.value[0].toUpperCase() +
+            lastName.value.slice(1)
+        );
+        let newCommentaire = document.createTextNode(
+          message.value[0].toUpperCase() + message.value.slice(1)
+        );
+
+        newDiv.appendChild(newDiv1);
+        newDiv1.appendChild(newH3);
+        newDiv1.appendChild(newDiv2);
+        newH3.appendChild(newTexte);
+        newDiv2.appendChild(newP);
+        newP.appendChild(newCommentaire);
+        commentaire.appendChild(newDiv);
+
+        firstName.value = "";
+        lastName.value = "";
+        message.value = "";
+      });
+    </script>
   </body>
 </html>
