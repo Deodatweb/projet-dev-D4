@@ -178,7 +178,7 @@
         // On empêche le comportement par défaut
         event.preventDefault();
 
-        // On déclare les constantes du DOM.
+        // On déclare les constantes du DOM à partir de id
         const firstNameInput = document.getElementById("first-name");
         const lastNameInput = document.getElementById("last-name");
         const messageInput = document.getElementById("message");
@@ -186,7 +186,7 @@
         const errorMessage = document.getElementById("error-message").innerText;
         const messageMax = document.getElementById("message-max").innerText;
 
-        // on effectue différents tests :
+        // on effectue différents tests sur les champs :
         // 1- Test si les champs prenom, nom et message sont vides
         if (
           firstNameInput.value.trim() === "" ||
@@ -195,36 +195,42 @@
         ) {
           // on affiche le message d'erreur du DOM
           alert(errorMessage.trim());
-          event.preventDefault();
           // 2- Test si le champ prénom contient des caractères non autorisés
         } else if (myRegex.test(firstNameInput.value) == false) {
           alert(
-            "Des caractères non autorisés sont présents !\nVeuillez revoir votre prénom."
+            "Des caractères non autorisés sont présents !\nVeuillez revoir le champ 'Prénom'."
           );
           firstNameInput.value = "";
-          event.preventDefault();
           // 3- Test si le champ nom contient des caractères non autorisés
         } else if (myRegex.test(lastNameInput.value) == false) {
           alert(
-            "Des caractères non autorisés sont présents !\nVeuillez revoir votre nom."
+            "Des caractères non autorisés sont présents !\nVeuillez revoir le champ 'Nom'."
           );
           lastNameInput.value = "";
-          event.preventDefault();
           // 4- Test si le champ message contient plus de 500 caractères
         } else if (messageInput.value.length > 500) {
           alert(messageMax);
-          event.preventDefault();
         }
 
-        // on va chercher la position des commentaires dans le DOM
+        // on récupère la position des commentaires dans le DOM
         let commentList = document.getElementById("comment-list");
 
-        // on ajoute les différentes balises et classes reprises du commentaire précédent dans le Dom
+        // on ajoute les différentes balises et classes reprises du commentaire précédent dans le DOM
         let newCommentDiv = document.createElement("div");
-        newCommentDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
+        newCommentDiv.classList.add(
+          "flex",
+          "space-x-4",
+          "text-sm",
+          "text-gray-500"
+        );
 
         let commentContentDiv = document.createElement("div");
-        commentContentDiv.classList.add("flex-1", "py-10", "border-t", "border-gray-200");
+        commentContentDiv.classList.add(
+          "flex-1",
+          "py-10",
+          "border-t",
+          "border-gray-200"
+        );
 
         let commentTitle = document.createElement("h3");
         commentTitle.classList.add("font-medium", "text-gray-900");
@@ -238,29 +244,31 @@
           "text-gray-500"
         );
 
-        let commentParagraph = document.createElement("p");
+        let paragraph = document.createElement("p");
 
         // On met la première lettre du prénom, du nom et du message en majuscule
-        let commentTitleText = document.createTextNode(
-          firstNameInput.value.charAt(0).toUpperCase() +
-            firstNameInput.value.slice(1) +
-            " " +
-            lastNameInput.value.charAt(0).toUpperCase() +
-            lastNameInput.value.slice(1)
-        );
-        let commentContentText = document.createTextNode(
-          messageInput.value.charAt(0).toUpperCase() + messageInput.value.slice(1)
+        let titleParagraph = document.createTextNode(
+          firstNameInput.value[0].toUpperCase() +
+          firstNameInput.value.slice(1) +
+          " " +
+          lastNameInput.value[0].toUpperCase() +
+          lastNameInput.value.slice(1)
         );
 
+        let contentParagraph = document.createTextNode(
+          messageInput.value[0].toUpperCase() + messageInput.value.slice(1)
+        );
+
+        // on affiche le commentaire dans le DOM
         newCommentDiv.appendChild(commentContentDiv);
         commentContentDiv.appendChild(commentTitle);
         commentContentDiv.appendChild(commentTextDiv);
-        commentTitle.appendChild(commentTitleText);
-        commentTextDiv.appendChild(commentParagraph);
-        commentParagraph.appendChild(commentContentText);
+        commentTitle.appendChild(titleParagraph);
+        commentTextDiv.appendChild(paragraph);
+        paragraph.appendChild(contentParagraph);
         commentList.appendChild(newCommentDiv);
 
-        // on supprime les valeurs saisies des champs
+        // on réinitialise chaque champ
         firstNameInput.value = "";
         lastNameInput.value = "";
         messageInput.value = "";
