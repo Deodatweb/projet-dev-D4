@@ -173,41 +173,52 @@
     <script type="text/javascript">
       const form = document.querySelector("form");
 
+      // Ajout d'un écouteur d'événement sur le formulaire pour écouter le submit
       form.addEventListener("submit", (event) => {
+        // On empêche le comportement par défaut
         event.preventDefault();
 
-        const firstName = document.getElementById("first-name");
-        const lastName = document.getElementById("last-name");
-        const message = document.getElementById("message");
+        // On déclare les constantes du DOM.
+        const firstNameInput = document.getElementById("first-name");
+        const lastNameInput = document.getElementById("last-name");
+        const messageInput = document.getElementById("message");
         const myRegex = /^[a-zA-Z-\s]+$/;
         const errorMessage = document.getElementById("error-message").innerText;
         const messageMax = document.getElementById("message-max").innerText;
 
+        // on effectue différents tests :
+        // 1- Test si les champs prenom, nom et message sont vides
         if (
-          firstName.value.trim() === "" ||
-          lastName.value.trim() === "" ||
-          message.value.trim() === ""
+          firstNameInput.value.trim() === "" ||
+          lastNameInput.value.trim() === "" ||
+          messageInput.value.trim() === ""
         ) {
+          // on affiche le message d'erreur du DOM
           alert(errorMessage.trim());
           event.preventDefault();
-        } else if (myRegex.test(firstName.value) == false) {
+          // 2- Test si le champ prénom contient des caractères non autorisés
+        } else if (myRegex.test(firstNameInput.value) == false) {
           alert(
             "Des caractères non autorisés sont présents !\nVeuillez revoir votre prénom."
           );
-          firstName.value = "";
+          firstNameInput.value = "";
           event.preventDefault();
-        } else if (myRegex.test(lastName.value) == false) {
+          // 3- Test si le champ nom contient des caractères non autorisés
+        } else if (myRegex.test(lastNameInput.value) == false) {
           alert(
             "Des caractères non autorisés sont présents !\nVeuillez revoir votre nom."
           );
-          lastName.value = "";
+          lastNameInput.value = "";
           event.preventDefault();
-        } else if (message.value.length > 500) {
+          // 4- Test si le champ message contient plus de 500 caractères
+        } else if (messageInput.value.length > 500) {
           alert(messageMax);
           event.preventDefault();
         }
 
+        // on va chercher la position des commentaires dans le DOM
         let commentaire = document.getElementById("comment-list");
+        // on ajoute les différentes balises et classes reprises du commentaire précédent
         let newDiv = document.createElement("div");
         newDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
         let newDiv1 = document.createElement("div");
@@ -224,15 +235,16 @@
         );
         let newP = document.createElement("p");
 
+        // On met la première lettre du prénom, du nom et du message en majuscule
         let newTexte = document.createTextNode(
-          firstName.value[0].toUpperCase() +
-            firstName.value.slice(1) +
+          firstNameInput.value[0].toUpperCase() +
+            firstNameInput.value.slice(1) +
             " " +
-            lastName.value[0].toUpperCase() +
-            lastName.value.slice(1)
+            lastNameInput.value[0].toUpperCase() +
+            lastNameInput.value.slice(1)
         );
         let newCommentaire = document.createTextNode(
-          message.value[0].toUpperCase() + message.value.slice(1)
+          messageInput.value[0].toUpperCase() + messageInput.value.slice(1)
         );
 
         newDiv.appendChild(newDiv1);
@@ -243,9 +255,10 @@
         newP.appendChild(newCommentaire);
         commentaire.appendChild(newDiv);
 
-        firstName.value = "";
-        lastName.value = "";
-        message.value = "";
+        // on supprime les valeurs saisies des champs
+        firstNameInput.value = "";
+        lastNameInput.value = "";
+        messageInput.value = "";
       });
     </script>
   </body>
