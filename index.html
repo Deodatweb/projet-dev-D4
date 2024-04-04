@@ -217,43 +217,48 @@
         }
 
         // on va chercher la position des commentaires dans le DOM
-        let commentaire = document.getElementById("comment-list");
-        // on ajoute les différentes balises et classes reprises du commentaire précédent
-        let newDiv = document.createElement("div");
-        newDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
-        let newDiv1 = document.createElement("div");
-        newDiv1.classList.add("flex-1", "py-10", "border-t", "border-gray-200");
-        let newH3 = document.createElement("h3");
-        newH3.classList.add("font-medium", "text-gray-900");
-        let newDiv2 = document.createElement("div");
-        newDiv2.classList.add(
+        let commentList = document.getElementById("comment-list");
+
+        // on ajoute les différentes balises et classes reprises du commentaire précédent dans le Dom
+        let newCommentDiv = document.createElement("div");
+        newCommentDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
+
+        let commentContentDiv = document.createElement("div");
+        commentContentDiv.classList.add("flex-1", "py-10", "border-t", "border-gray-200");
+
+        let commentTitle = document.createElement("h3");
+        commentTitle.classList.add("font-medium", "text-gray-900");
+
+        let commentTextDiv = document.createElement("div");
+        commentTextDiv.classList.add(
           "prose",
           "prose-sm",
           "mt-4",
           "max-w-none",
           "text-gray-500"
         );
-        let newP = document.createElement("p");
+
+        let commentParagraph = document.createElement("p");
 
         // On met la première lettre du prénom, du nom et du message en majuscule
-        let newTexte = document.createTextNode(
-          firstNameInput.value[0].toUpperCase() +
+        let commentTitleText = document.createTextNode(
+          firstNameInput.value.charAt(0).toUpperCase() +
             firstNameInput.value.slice(1) +
             " " +
-            lastNameInput.value[0].toUpperCase() +
+            lastNameInput.value.charAt(0).toUpperCase() +
             lastNameInput.value.slice(1)
         );
-        let newCommentaire = document.createTextNode(
-          messageInput.value[0].toUpperCase() + messageInput.value.slice(1)
+        let commentContentText = document.createTextNode(
+          messageInput.value.charAt(0).toUpperCase() + messageInput.value.slice(1)
         );
 
-        newDiv.appendChild(newDiv1);
-        newDiv1.appendChild(newH3);
-        newDiv1.appendChild(newDiv2);
-        newH3.appendChild(newTexte);
-        newDiv2.appendChild(newP);
-        newP.appendChild(newCommentaire);
-        commentaire.appendChild(newDiv);
+        newCommentDiv.appendChild(commentContentDiv);
+        commentContentDiv.appendChild(commentTitle);
+        commentContentDiv.appendChild(commentTextDiv);
+        commentTitle.appendChild(commentTitleText);
+        commentTextDiv.appendChild(commentParagraph);
+        commentParagraph.appendChild(commentContentText);
+        commentList.appendChild(newCommentDiv);
 
         // on supprime les valeurs saisies des champs
         firstNameInput.value = "";
